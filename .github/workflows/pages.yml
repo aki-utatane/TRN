@@ -23,14 +23,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Prepare public site
+        run: |
+          mkdir -p _site/releases/0.1.5x
+          cp index.html _site/index.html
+          cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at.html _site/releases/0.1.5x/
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Upload artifact
+
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: "_site"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
