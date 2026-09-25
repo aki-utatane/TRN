@@ -14,10 +14,3 @@ The 0.1.5x line is preserved as a closed baseline. New development should start 
 ## GitHub Pages
 
 This repository includes a Pages deployment workflow at `.github/workflows/pages.yml`.
-When Pages deployment is available for this repository/account, the site is expected at:
-
-`https://aki-utatane.github.io/TRN/`
-
-## Handoff documents
-
-See `docs/` and `handoff/` for the 2026-09-25 closeout and migration records.
