@@ -36,12 +36,10 @@ jobs:
             find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
           )
 
-          zip -r "${PKG}.zip" "$PKG"
-
       - name: Upload snapshot artifact
         uses: actions/upload-artifact@v4
         with:
           name: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26
-          path: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26.zip
+          path: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26/
           if-no-files-found: error
           retention-days: 30
