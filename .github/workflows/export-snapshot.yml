@@ -43,3 +43,4 @@ jobs:
           path: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26/
           if-no-files-found: error
           retention-days: 30
+          include-hidden-files: true
