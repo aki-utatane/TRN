@@ -26,15 +26,22 @@ jobs:
 
       - name: Prepare public site
         run: |
-          mkdir -p _site/releases/0.1.5x
+          mkdir -p _site/releases/0.1.5x/offline
           cp index.html _site/index.html
           cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at.html _site/releases/0.1.5x/
           cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html _site/releases/0.1.5x/
+          cp releases/0.1.5x/offline/index.html _site/releases/0.1.5x/offline/index.html
+          cp releases/0.1.5x/offline/sw.js _site/releases/0.1.5x/offline/sw.js
+          cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html _site/releases/0.1.5x/offline/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html
 
       - name: Verify public artifact
         run: |
           test -f _site/index.html
           test -f _site/releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html
+          test -f _site/releases/0.1.5x/offline/index.html
+          test -f _site/releases/0.1.5x/offline/sw.js
+          test -f _site/releases/0.1.5x/offline/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html
+          cmp -s             _site/releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html             _site/releases/0.1.5x/offline/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
