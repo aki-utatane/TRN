@@ -1,0 +1,47 @@
+name: Export TRN development snapshot
+
+on:
+  push:
+    paths:
+      - ".github/workflows/export-snapshot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build snapshot
+        run: |
+          set -euo pipefail
+          PKG="TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26"
+          mkdir -p "$PKG/.github/workflows"
+          mkdir -p "$PKG/releases/0.1.5x"
+
+          cp README.md "$PKG/README.md"
+          cp index.html "$PKG/index.html"
+          cp .github/workflows/pages.yml "$PKG/.github/workflows/pages.yml"
+          cp .github/workflows/export-snapshot.yml "$PKG/.github/workflows/export-snapshot.yml"
+          cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at.html "$PKG/releases/0.1.5x/"
+          cp releases/0.1.5x/TRN_0.1.5x_CLOSED_FINAL_0.1.5at1.html "$PKG/releases/0.1.5x/"
+          cp releases/0.1.5x/TRN_0.1.5at1_METADATA_PATCH.md "$PKG/releases/0.1.5x/"
+
+          (
+            cd "$PKG"
+            find . -type f ! -name SHA256SUMS.txt -print0 | sort -z | xargs -0 sha256sum > SHA256SUMS.txt
+          )
+
+          zip -r "${PKG}.zip" "$PKG"
+
+      - name: Upload snapshot artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26
+          path: TRN_0.1.5at1_DEVELOPMENT_PACKAGE_2026-09-26.zip
+          if-no-files-found: error
+          retention-days: 30
